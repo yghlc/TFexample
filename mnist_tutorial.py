@@ -30,7 +30,7 @@ config.gpu_options.per_process_gpu_memory_fraction = 0.4
 # session = tf.Session(config=config, ...)
 
 
-with tf.device('/gpu:1'):
+with tf.device('/gpu:0'):
     x = tf.placeholder(tf.float32,shape=[None,784])
     y_ = tf.placeholder(tf.float32,shape=[None,10])
 
