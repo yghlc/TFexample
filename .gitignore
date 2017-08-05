@@ -97,3 +97,4 @@ ENV/
 
 .idea/
 MNIST_data/
+*.csv
