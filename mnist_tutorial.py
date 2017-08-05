@@ -14,6 +14,8 @@ import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
 mnist = input_data.read_data_sets('MNIST_data', one_hot=True)
 
+config = tf.ConfigProto()
+config.gpu_options.allow_growth = True
 
 with tf.device('/gpu:1'):
     x = tf.placeholder(tf.float32,shape=[None,784])
@@ -114,7 +116,7 @@ with tf.device('/gpu:1'):
     correct_prediction = tf.equal(tf.argmax(y_conv,1),tf.argmax(y_,1))
     accuracy = tf.reduce_mean(tf.cast(correct_prediction,tf.float32))
 
-    with tf.Session() as sess:
+    with tf.Session(config=config) as sess:
         sess.run(tf.global_variables_initializer())
         for i in range(20000):
             batch = mnist.train.next_batch(50)
