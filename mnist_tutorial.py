@@ -14,8 +14,21 @@ import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
 mnist = input_data.read_data_sets('MNIST_data', one_hot=True)
 
+
+# # allow_growth option, which attempts to allocate only as much GPU memory based on runtime allocations:
+# # it starts out allocating very little memory, and as Sessions get run and more GPU memory is needed, we extend the GPU memory region needed by the TensorFlow process.
+# # Note that we do not release memory, since that can lead to even worse memory fragmentation.
+# config = tf.ConfigProto()
+# config.gpu_options.allow_growth = True
+
+# The second method is the per_process_gpu_memory_fraction option,
+# which determines the fraction of the overall amount of memory that
+#  each visible GPU should be allocated.
+# For example, you can tell TensorFlow to only allocate 40% of the total memory of each GPU
 config = tf.ConfigProto()
-config.gpu_options.allow_growth = True
+config.gpu_options.per_process_gpu_memory_fraction = 0.4
+# session = tf.Session(config=config, ...)
+
 
 with tf.device('/gpu:1'):
     x = tf.placeholder(tf.float32,shape=[None,784])
